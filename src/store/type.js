@@ -1,0 +1,13 @@
+'use strict'
+
+export const SET_TOKEN = 'SET_TOKEN'
+export const SET_USER = 'SET_USER'
+export const SET_LOADING = 'SET_LOADING'
+export const SET_LONGITUDE = 'SET_LONGITUDE'
+export const SET_LATIUDE = 'SET_LATIUDE'
+export const LOGOUT = 'LOGOUT'
+export const SET_CITY = 'SET_CITY'
+export const SET_REGIONID = 'SET_REGIONID'
+export const SET_GPSCITY = 'SET_GPSCITY'
+export const SET_GPSREGIONID = 'SET_GPSREGIONID'
+export const SET_OPENID = 'SET_OPENID'

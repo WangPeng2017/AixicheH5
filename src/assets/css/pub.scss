@@ -1,0 +1,119 @@
+/*
+* font default config
+*/
+$active_font_color:#f15353;
+$active_background_color:#EC3131;
+$default_font-size:28px;
+$default_font-family: 'MicrosoftYaHei';
+$default_font_placeholdercolor:#BABCBB;
+$default_price_font-size:24px;
+$default_price_color:#EC3131;
+$default_cart_color:#ff6c00;
+$default_navicon_size:40px;
+$default_nav_font-size:32px;
+
+/*
+* 常用颜色配置
+*/
+
+// $default_theme_color: #f15353;                         // 主题色
+$default_theme_color: #ff0036;                        // 主题色
+$default_font_color:#333333;                           // 默认字体颜色
+$default_background_color: #f7f7f7;                   // 默认背景颜色
+$default_border_color: #e6e6e6;                        // 边框颜色
+$default_red_color: #f15353;                           // 红色
+$default_green_color: #56b75b;                         // 绿色
+// $default_blue_color: #50add3;                          // 蓝色
+$default_blue_color: #0080ff;                          // 蓝色
+$default_orange_color: #ff6f35;                        // 橙色
+$default_gray_color: #f7f8fa;                          // 灰色
+$default_title_color: #333333;                          // 主标题颜色
+$default_subtitle_color: #81838e;                      // 副标题颜色
+$default_navtitle_color: #333333;                      // 导航标题颜色
+$default_active_background_color: #ececec;
+$default_disabled_background_color: #d2d2d2;
+
+$default_icon_size: 56px;
+$default_nav_icon_size: 40px;
+
+
+/*
+控件默认字体
+*/
+$default_font_family: 'MicrosoftYaHei';
+$default_bigfont_size: 36px;
+$default_largefont_size: 32px;
+$default_font_size: 28px;
+$default_middlefont_size: 24px;
+$default_smallfont_size: 20px;
+/*
+行高
+*/
+$default_title_lineheight: 1.36;
+$default_subtitle_lineheight: 1;
+/*
+输入文本框
+*/
+$default_input_background_color: #f7f7f7;
+$default_input_color: #232326;
+$default_input_height: 60px;
+/*
+选项卡
+*/
+$default_tabbar_height: 98px;
+$default_tabbar_image_size: 40px;
+/*
+导航栏
+*/
+$default_navbar_height: 92px;
+$default_navbar_image_size: 40px;
+$seller_navbar_height: 375px;
+/*
+工具栏
+*/
+$default_toolbar_height: 88px;
+$default_toolbar_image_size: 40px;
+
+$default_buytoolbar_height: 108px;
+$default_buytoolbar_image_size: 48px;
+/*
+状态栏
+*/
+$default_statusbar_height: 40px;
+
+$default_cell_height: 88px;
+$default_cellgroup_height: 60px;
+$default_text_height: 44px;
+$default_cell_icon_size: 40px;
+/*
+* cell config
+*/
+$default_row_height: 76px;
+
+/*
+* form default config
+*/
+$default_input_placeholder_color:#999;
+$default_input_icon_color:#999;
+$default_input_border_color:#e7e7e7;
+
+
+@mixin backimg($image, $size: contain) {
+  line-height: 0;
+  background-image: url(#{$image}@2x.png);
+  background-size: $size;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+    background-image: url(#{$image}@3x.png);
+  }
+}
+
+@mixin textHideByLine($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  word-break: break-all;
+}

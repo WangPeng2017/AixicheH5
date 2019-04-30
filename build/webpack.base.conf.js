@@ -120,7 +120,7 @@ module.exports = vuxLoader.merge(webpackConfig, {
       name: 'after-less-parser',
       fn: function (source) {
         if (
-          this.resourcePath.replace(/\\/g, '/').indexOf('/vux/src/components') >
+          this.resourcePath.replace(/\\/g, '/').indexOf('vux/src/components') >
           -1
         ) {
           let result = source.match(/\d+px/g) || []
@@ -142,7 +142,7 @@ module.exports = vuxLoader.merge(webpackConfig, {
       name: 'style-parser',
       fn: function (source) {
         if (
-          this.resourcePath.replace(/\\/g, '/').indexOf('/vux/src/components') >
+          this.resourcePath.replace(/\\/g, '/').indexOf('vux/src/components') >
           -1
         ) {
           let result = source.match(/\d+px/g) || []

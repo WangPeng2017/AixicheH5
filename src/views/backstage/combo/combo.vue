@@ -29,17 +29,18 @@ export default {
       results: [],
       value: '',
       placeholder: '输入商品名称',
-      goods: require('Assets/img/logo.png')
+      goods: require('Assets/img/logo.png'),
+      sellerPackageList: []
     }
   },
   methods: {
     handleClick (index) {
       if (index === 0) {
         // 商家套餐
-        this.$router.push({ name: 'comboSJ' })
+        this.$router.push({ name: 'comboSJ', query: { 'packageType': index } })
       } else {
         // 联营套餐
-        this.$router.push({ name: 'comboLY' })
+        this.$router.push({ name: 'comboLY', query: { 'packageType': index } })
       }
     }
   }

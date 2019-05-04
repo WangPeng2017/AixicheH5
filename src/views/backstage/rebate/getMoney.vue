@@ -187,6 +187,7 @@ import Header from 'Common/Header'
 import Panel from 'Common/Panel'
 import Model from 'Common/Model'
 import { List, Cell, CellGroup, RadioGroup, Radio } from 'vant'
+// import { AddPutForward } from '@/api'
 import {
   Tab,
   TabItem,
@@ -238,6 +239,11 @@ export default {
       } else {
         this.showModel2 = true
       }
+    },
+    addPutForward () {
+      // AddPutForward().then(res => {
+
+      // })
     },
     closeModel () {
       this.showModel1 = false

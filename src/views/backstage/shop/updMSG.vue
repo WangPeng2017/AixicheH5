@@ -76,6 +76,7 @@
 import Header from 'Common/Header'
 import Upload from 'Common/Upload'
 import { Group, Cell, XInput, XTextarea, XButton } from 'vux'
+import { updateSellerInfo } from '@api'
 export default {
   name: 'updMSG',
   components: {
@@ -100,7 +101,91 @@ export default {
       isShowChooseBrand: false
     }
   },
+  created () {
+  },
   methods: {
+    async _updateSellerInfo () {
+      let form = new FormData()
+      let data = this.$route.query.sellerInfo
+      form.append('seller_id', data.seller_id)
+      form.append('user_id', data.user_id)
+      form.append('seller_type_id', data.seller_type_id)
+      form.append('seller_name', this.shopName)
+      form.append('region_id', data.region_id)
+      form.append('region_key', data.region_key)
+      form.append('seller_address', this.place)
+      form.append('longitude', data.longitude)
+      form.append('latitude', data.latitude)
+      form.append('contacts_name', this.name)
+      form.append('contacts_mobile', this.phone)
+      form.append('contacts_email', data.contacts_email)
+      form.append('licence_number', data.licence_number)
+      form.append('business_license_img', data.business_license_img)
+      form.append('business_license_start', data.business_license_start)
+      form.append('business_license_end', data.business_license_end)
+      form.append('is_longtime', data.is_longtime)
+      form.append('organization_code', data.organization_code)
+      form.append('organization_code_img', data.organization_code_img)
+      form.append('empirical_range', data.empirical_range)
+      form.append('bank_account_name', data.bank_account_name)
+      form.append('bank_account_number', data.bank_account_number)
+      form.append('bank_name', data.bank_name)
+      form.append('bank_address', data.bank_address)
+      form.append('is_settlement_account', data.is_settlement_account)
+      form.append('settlement_bank_account_number', data.settlement_bank_account_number)
+      form.append('settlement_bank_account_name', data.settlement_bank_account_name)
+      form.append('settlement_bank_name', data.settlement_bank_name)
+      form.append('settlement_bank_address', data.settlement_bank_address)
+      form.append('create_time', data.create_time)
+      form.append('update_time', data.update_time)
+      form.append('seller_status', data.seller_status)
+      form.append('seller_status_desc', data.seller_status_desc)
+      form.append('shop_name', data.shop_name)
+      form.append('shop_keyword', data.shop_keyword)
+      form.append('seller_introduction', this.shopIntroduction)
+      form.append('seller_evaluate', data.seller_evaluate)
+      form.append('shop_type', data.shop_type)
+      form.append('document_type', data.document_type)
+      form.append('identification_number', data.identification_number)
+      form.append('card_front', data.card_front)
+      form.append('card_side', data.card_side)
+      form.append('hand_photo', data.hand_photo)
+      form.append('seller_logo', data.seller_logo)
+      form.append('shop_phone', this.code)
+      form.append('hours_phone', data.hours_phone)
+      form.append('seller_head_img', data.seller_head_img)
+      form.append('seller_state', data.seller_state)
+      form.append('state_desc', data.state_desc)
+      form.append('is_self', data.is_self)
+      form.append('weixin_openid', data.weixin_openid)
+      form.append('handling_fee_rate', data.handling_fee_rate)
+      form.append('is_points_zone', data.is_points_zone)
+      form.append('points_billing_ratio', data.points_billing_ratio)
+      form.append('points_remarks', data.points_remarks)
+      form.append('applicant', data.applicant)
+      form.append('contact_information', data.contact_information)
+      form.append('inviter_user_id', data.inviter_user_id)
+      form.append('seller_level_name', data.seller_level_name)
+      form.append('upgrade_amount', data.upgrade_amount)
+      form.append('remarks', data.remarks)
+      form.append('publication_status', data.publication_status)
+      form.append('publication_name', data.publication_name)
+      form.append('publication_mobile', data.publication_mobile)
+      form.append('publication_fee', data.publication_fee)
+      form.append('advance_status', data.advance_status)
+      form.append('advance_name', data.advance_name)
+      form.append('advance_mobile', data.advance_mobile)
+      form.append('advance_fee', data.advance_fee)
+      form.append('wholesale_status', data.wholesale_status)
+      form.append('wholesale_name', data.wholesale_name)
+      form.append('wholesale_mobile', data.wholesale_mobile)
+      form.append('wholesale_fee', data.wholesale_fee)
+      form.append('seller_invitation_code', data.seller_invitation_code)
+      let res = await updateSellerInfo(form)
+      if (res && res.code === 200) {
+        console.log(res)
+      }
+    },
     onUpload: function (val) {
       this.images = []
       this.images = val
@@ -110,6 +195,7 @@ export default {
       this.images2 = val
     },
     sure () {
+      this._updateSellerInfo()
       console.log('确认修改')
       this.$router.back()
     }

@@ -9,8 +9,8 @@
            custom-bar-width="60px">
         <tab-item @on-item-click="getData(0)"
                   selected>待审核</tab-item>
-        <tab-item @on-item-click="getData(1)">已审核</tab-item>
-        <tab-item @on-item-click="getData(2)">未通过</tab-item>
+        <tab-item @on-item-click="getData(200)">已审核</tab-item>
+        <tab-item @on-item-click="getData(100)">未通过</tab-item>
         <tab-item @on-item-click="getData(3)">已过期</tab-item>
       </tab>
       <div class="section-box">
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { GetSellerPackageList } from '@api'
 import Header from 'Common/Header'
 import {
   Tab,
@@ -121,12 +122,37 @@ export default {
   },
   data () {
     return {
-      defaultGoods: require('Assets/img/defaultGoods.png')
+      defaultGoods: require('Assets/img/defaultGoods.png'),
+      sellerPackageList: []
     }
   },
+  created () {
+    this.getData(0)
+  },
   methods: {
-    getData (index) {
-      console.log(index)
+    async fetchSellerPackageList (status) {
+      let page = 1
+      let rows = 10
+      let keyword = ''
+      let sellerId = sessionStorage.getItem('seller_id')
+      let packageType = this.$route.query.packageType
+      let auditStatus = status
+      let consumptionTypes = -1
+      let sellerPackageList = await GetSellerPackageList(page,
+        rows,
+        keyword,
+        sellerId,
+        packageType,
+        auditStatus,
+        consumptionTypes)
+      if (sellerPackageList && sellerPackageList.status === 200) {
+        this.sellerPackageList = sellerPackageList.data
+        console.log(this.sellerPackageList)
+      }
+    },
+    getData (auditStatus) {
+      console.log(auditStatus)
+      this.fetchSellerPackageList(auditStatus)
     },
     onButtonClick (type, id) {
       alert('on button click ' + type)

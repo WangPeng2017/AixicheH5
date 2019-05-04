@@ -7,9 +7,9 @@
          active-color="#ff0000"
          bar-active-color="#ff0000"
          custom-bar-width="100px">
-      <tab-item @on-item-click="getData(0)"
+      <tab-item @on-item-click="changeTab(1)"
                 selected>已审核</tab-item>
-      <tab-item @on-item-click="getData(1)">待审核</tab-item>
+      <tab-item @on-item-click="changeTab(0)">待审核</tab-item>
     </tab>
     <section class="section">
       <van-list class="list"
@@ -18,8 +18,8 @@
                 finished-text="没有更多了"
                 @load="onLoad">
         <!-- <van-cell v-for="item in 10" :key="item" :title="item" /> -->
-        <Panel v-for="n in 10"
-               :key="n"
+        <Panel v-for="(n,i) in list"
+               :key="i"
                class="list-item">
           <template slot="left">
             <img :src="bank"
@@ -27,9 +27,9 @@
                  class="bankLogo">
           </template>
           <template slot="center">
-            <p class="money">￥36999</p>
-            <p class="account">15976445619</p>
-            <p class="date">2019-1-24 9:42:36</p>
+            <p class="money">￥{{n.putforward_money}}</p>
+            <p class="account">{{n.account_number}}</p>
+            <p class="date">{{n.apply_time|date}}</p>
           </template>
           <template slot="right">
             <span class="state">提现成功</span>
@@ -46,6 +46,8 @@ import Header from 'Common/Header'
 import Panel from 'Common/Panel'
 import { List } from 'vant'
 import { Tab, TabItem } from 'vux'
+import { getPayMentaListGET, GetList } from '@api'
+const USER_ID = '83b0e4f9-3dcc-4a60-8a42-df514ed239f5'
 
 export default {
   name: 'txList',
@@ -61,24 +63,76 @@ export default {
       bank: require('Assets/img/defaultGoods.png'),
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      status: 1
     }
   },
+  filters: {
+    date: function (val) {
+      var date = new Date(val)
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      if (month < 10) {
+        month = '0' + month
+      }
+      var day = date.getDay()
+      if (day < 10) {
+        day = '0' + day
+      }
+      var housr = date.getHours()
+      if (housr < 9) {
+        housr = '0' + housr
+      }
+      var min = date.getMinutes()
+      if (min < 9) {
+        min = '0' + min
+      }
+      var seconds = date.getSeconds()
+      if (seconds < 9) {
+        seconds = '0' + 9
+      }
+      return year + '-' + month + '-' + day + ' ' + housr + ':' + min + ':' + seconds
+    }
+  },
+  mounted () {
+    this.getPayMentaListGET()
+    this.getData(1)
+  },
   methods: {
+    // 切换审核未审核
+    changeTab (type) {
+      this.status = type
+      this.getData(this.status)
+    },
     onLoad () {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
+      // // 异步更新数据
+      // this.getData(this.status)
+      // setTimeout(() => {
+      //   if (this.list.length === 0) {
+      //     this.finished = true
+      //     this.loading = false
+      //   }
+      //   // 加载状态结束
+      //   this.loading = false
 
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true
-        }
-      }, 500)
+      //   // 数据全部加载完成
+      //   if (this.list.length >= 40) {
+
+      //   }
+      // }, 500)
+    },
+    async getData (type) {
+      let data = await GetList(USER_ID, type)
+      this.list = data.data
+      if (this.list.length === 0) {
+        this.loading = false
+        this.finished = true
+      }
+    },
+    async getPayMentaListGET () {
+      // 提现账户列表信息
+      let data = await getPayMentaListGET(USER_ID, 0)
+      console.log(data)
     }
   }
 }

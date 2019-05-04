@@ -41,11 +41,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 10"
-                :key="n">
-              <td>138xxxx2368</td>
-              <td>会员升级返利</td>
-              <td>￥3698 6824.00</td>
+            <tr v-for="(n,i) in fanlis"
+                :key="i">
+              <td>{{n.user_mobile|phone}}</td>
+              <td>{{n.record_goods_name }}</td>
+              <td>￥{{n.user_money}}</td>
             </tr>
           </tbody>
         </x-table>
@@ -58,6 +58,9 @@
 <script>
 import Header from 'Common/Header'
 import { XButton, XTable } from 'vux'
+import { getRebateInfo } from '@api'
+const USER_ID = '83b0e4f9-3dcc-4a60-8a42-df514ed239f5'
+
 export default {
   name: 'rebate',
   components: {
@@ -70,8 +73,19 @@ export default {
       bg: require('Assets/img/rebateBg.png'),
       logo: require('Assets/img/rebateLogo.png'),
       txDetail: require('Assets/img/txDetail.png'),
-      flDetail: require('Assets/img/flDetail.png')
+      flDetail: require('Assets/img/flDetail.png'),
+      user_id: sessionStorage.getItem('seller_id'),
+      fanlis: []
     }
+  },
+  filters: {
+    phone: function (val) {
+      console.log(typeof val)
+      return val.substring(0, 3) + '****' + val.substring(7, 11)
+    }
+  },
+  mounted () {
+    this.getRebateInfo()
   },
   methods: {
     toTX (id) {
@@ -82,6 +96,10 @@ export default {
     },
     toTXList () {
       this.$router.push({ name: 'txList' })
+    },
+    async getRebateInfo () {
+      let data = await getRebateInfo(USER_ID)
+      this.fanlis = data.data
     }
   }
 }

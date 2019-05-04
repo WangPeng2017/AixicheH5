@@ -30,10 +30,10 @@
                          @on-open="handleEvents('on-open')"
                          transition-mode="follow">
             <div slot="right-menu">
-              <swipeout-button @click.native="onButtonClick('fav')"
+              <swipeout-button @click.native="onModifyClick()"
                                :width="40"
                                style="background:#DCDCDC;">修改</swipeout-button>
-              <swipeout-button @click.native="onButtonClick('delete')"
+              <swipeout-button @click.native="onDeleteClick()"
                                :width="40"
                                style="background:#FF0036;">删除</swipeout-button>
             </div>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+// delectForm
+import { GetGoodsList } from '@api'
 import Header from 'Common/Header'
 import { Search } from 'vant'
 import {
@@ -86,19 +88,35 @@ export default {
       results: [],
       value: '',
       placeholder: '输入商品名称',
-      goods: require('Assets/img/logo.png')
+      goods: require('Assets/img/logo.png'),
+      goodsList: []
     }
   },
   methods: {
+    async fetchGoodsList () {
+      let goodsList = await GetGoodsList()
+      if (goodsList && goodsList.status === 200) {
+        this.goodsList = goodsList.data
+        console.log(goodsList)
+      }
+    },
     getData (index) {
       console.log(index)
     },
     onSearch (value) {
       console.log(value)
     },
-    onButtonClick (type) {
-      alert('on button click ' + type)
+    onModifyClick (type) {
+
     },
+    onDeleteClick () {
+
+    },
+    // async onDeleteClick () {
+    //   let deleceItem = await delectForm()
+    //   if (deleceItem && deleceItem.status === 200) {
+    //   }
+    // },
     handleEvents (type) {
       console.log('event: ', type)
     },

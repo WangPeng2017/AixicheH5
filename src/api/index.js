@@ -134,7 +134,7 @@ export const getUserEn = invitationcode =>
   base.post('/User/User/GetUserEn', invitationcode)
 // 根据用户编号获取用户信息
 export const getUserEntity = userid =>
-  base.get(`/User/User/GetUserEntity?userid=${userid}`)
+  base.get(`/User/User/GetUserEntity?user_id=${userid}`)
 /**
  ******************************************** 用户相关接口 ********************************************
  */
@@ -800,5 +800,100 @@ export const FetchFinancialListByTime = (id, page, rows, status) =>
     `/api/Finance/FinancialList?seller_id=${id}&page=${page}&rows=${rows}&settlement_status=${status}&settlement_source_type=-1`
   )
 /**
- ******************************************** 后台管理财务接口 ********************************************
+店铺信息
  */
+// 获取店铺信息
+export const getSellerInfo = id =>
+  base.get(`/api/SellerInfo/GetSellerInfo?user_id=${id}`)
+// 修改店铺信息
+export const updateSellerInfo = form =>
+  base.post('/api/SellerInfo/UpdateSellerInfo', form)
+// 获取商家等级列表
+export const getSellerLevelList = id =>
+  base.get(`/api/SellerInfo/GetSellerLevelList`)
+// 创建支付
+export const createCashPay = (price, sellerId, levelId) =>
+  base.post(
+    `/api/SellerInfo/CreateCashPay?price=${price}&seller_id=${sellerId}&levelId=${levelId}`
+  )
+/**
+订单
+ */
+// 我的商品订单
+export const GetOrderList = (id, page, rows, status) =>
+  base.post(
+    `/api/Order/GetOrderList?userId=${id}&page=${page}&rows=${rows}&status=${status}`
+  )
+/**
+返利
+ */
+
+// 获取用户返利信息列表
+export const getRebateInfo = userId =>
+  base.get(`api/RebateInfo/GetRebateInfo?user_id=${userId}`)
+// 获取返利提现账户列表
+export const GetPayMentaListGET = (userId, type) =>
+  base.get(`api/RebateInfo/GetPayMentaList?user_id=${userId}&usertype=${type}`)
+// 添加体现账号接口
+export const submitPaymentAccount = (entity, userId) => {
+  base.post(
+    `api/RebateInfo/SubmitPaymentAccount?entity=${entity}&user_id=${userId}`
+  )
+}
+// 获取用户提现记录
+export const GetList = (userId, isputforward) =>
+  base.get(
+    `/api/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`
+  )
+
+/**
+发布商品
+ */
+// 分页获取商品列表
+export const GetGoodsList = (page, row, keyword, sellerId, auditStatus) =>
+  base.post(
+    `/api/Goods/GetGridJson?page=${page}&row=${row}&keyword=${keyword}&seller_id=${sellerId}&audit_status=${auditStatus} }`
+  )
+// 获取商品分类列表
+export const getGoodsCategoryList = () =>
+  base.get(`/api/Goods/GetGoodsCategoryList`)
+// 获取商品分类列表
+export const getGoodsBrandList = categoryId =>
+  base.post(`/api/Goods/GetGoodsBrandList?category_id=${categoryId}`)
+// 获取商品
+export const getFormJson = goodsID =>
+  base.post(`/api/Goods/GetFormJson?goodsID=${goodsID}`)
+// 发布商品
+export const submitForm = (goodsEntity, keyValue, sellerId, userId) =>
+  base.post(
+    `/api/Goods/SubmitForm?goodsEntity=${goodsEntity}&keyValue=${keyValue}&sellerId=${sellerId}&userId=${userId}`
+  )
+// 删除商品
+export const delectForm = keyValue =>
+  base.post(`/api/Goods/DelectForm?keyValue=${keyValue}`)
+
+/**
+订单
+ */
+// 获取用户提现记录
+// export const GetList = (userId, isputforward) =>
+//   base.get(`/api/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`)
+// 获取订单详情
+export const GetOrderDetail = (orderId) =>
+  base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
+/**
+套餐
+ */
+// 获取商家或联营列表接口
+export const GetSellerPackageList = (
+  page,
+  rows,
+  keyword,
+  sellerId,
+  packageType,
+  auditStatus,
+  consumptionTypes
+) =>
+  base.post(
+    `/api/SellerPackage/GetGridJson?page=${page}&rows=${rows}&keyword=${keyword}&seller_id=${sellerId}&package_type=${packageType}&audit_status=${auditStatus}&consumption_types=${consumptionTypes}`
+  )

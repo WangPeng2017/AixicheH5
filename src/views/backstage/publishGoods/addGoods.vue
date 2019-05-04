@@ -91,11 +91,13 @@
 </template>
 
 <script>
+import { submitForm } from '@api'
 import Header from 'Common/Header'
 import Upload from 'Common/Upload'
 import Model from 'Common/Model'
 import { Search } from 'vant'
 import { Group, Cell, XInput, XTextarea, XButton } from 'vux'
+const USER_ID = '83b0e4f9-3dcc-4a60-8a42-df514ed239f5'
 export default {
   name: 'addGoods',
   components: {
@@ -135,8 +137,81 @@ export default {
     closeModel () {
       this.isShowChooseBrand = false
     },
-    submitGoods () {
-      this.$router.push({ name: 'goodsDetail' })
+    async submitGoods () {
+      let goodsEntity = {
+        'goods_id': 'string',
+        'goods_name': this.goodsName,
+        'goods_no': 'string',
+        'goods_sn': 'string',
+        'goods_sort': 0,
+        'goods_status': 0,
+        'goods_minprice': 0,
+        'goods_maxprice': 0,
+        'goods_skunum': 0,
+        'goods_saletype': 0,
+        'goods_img': this.images,
+        'goods_warningstorage': 0,
+        'goods_storage': 0,
+        'goods_saleprice': 0,
+        'goods_marketprice': 0,
+        'goods_purchaseprice': 0,
+        'goods_weight': 0,
+        'goods_grossweight': 0,
+        'goods_volume': 0,
+        'goods_clicknum': 0,
+        'goods_salenum': 0,
+        'goods_collectnum': 0,
+        'goods_evaluationnum': 0,
+        'goods_positive': 0,
+        'goods_validtype': 0,
+        'goods_validdate': '2019-05-04T05:53:33.488Z',
+        'goods_validdays': 0,
+        'goods_buymode': 0,
+        'goods_minintegral': 0,
+        'goods_maxintegral': 0,
+        'goods_buycoin': 0,
+        'goods_summary': 'string',
+        'goods_guarantee': 'string',
+        'goods_desc': this.goodsIntroduction,
+        'goods_mobiledesc': 'string',
+        'goods_attrjson': 'string',
+        'audit_status': 0,
+        'audit_reason': 'string',
+        'unit_id': 0,
+        'brand_id': 0,
+        'category_id': 0,
+        'category_searchkey': 0,
+        'seller_category_id': 0,
+        'type_id': 0,
+        'is_enableselfget': 0,
+        'selfget_store_id': 'string',
+        'is_enabledeliver': 0,
+        'freight_template_id': 'string',
+        'is_enableintostore': 0,
+        'intostore_store_id': 'string',
+        'is_enablevisit': 0,
+        'visitfee_template_id': 'string',
+        'is_enableappoint': 0,
+        'appoint_template_id': 'string',
+        'is_enablespec': 0,
+        'seller_id': 'string',
+        'create_userid': 'string',
+        'create_time': '2019-05-04T05:53:33.489Z',
+        'update_userid': 'string',
+        'update_time': '2019-05-04T05:53:33.489Z',
+        'retail': 0,
+        'activity': 0,
+        'points_area': 0,
+        'point_settlement_ratio': 0,
+        'remarks': 'string',
+        'purchase_limit': 0
+      }
+      let keyValue = this.$route.query.keyValue
+      let sellerId = sessionStorage.getItem('seller_id')
+      let submitGoods = await submitForm(goodsEntity, keyValue, sellerId, USER_ID)
+      if (submitGoods && submitGoods.status === 200) {
+        this.$router.push({ name: 'goodsDetail' })
+      }
     },
     onSearch () { }
   }

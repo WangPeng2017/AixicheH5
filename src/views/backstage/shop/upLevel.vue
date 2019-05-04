@@ -12,8 +12,10 @@
         <p class="level">普通商户</p>
       </div>
       <div class="part2">
-        <span class="is">黄金</span>
-        <span>钻石</span>
+        <span :class="{'is': selectIndex == index}"
+              v-for="(item,index) in sellerLevelList"
+              :key="item.id"
+              @click="handleLeval(index,item)">{{item.seller_level_name}}</span>
       </div>
       <div class="part3">
         <p>商户等级提升更多好处
@@ -42,6 +44,7 @@
 <script>
 import Header from 'Common/Header'
 import { XButton, XTable } from 'vux'
+import { getSellerLevelList } from '@api'
 export default {
   name: 'upLevel',
   components: {
@@ -53,12 +56,29 @@ export default {
     return {
       bg: require('Assets/img/main-bg.png'),
       logo: require('Assets/img/logo.png'),
-      logo4: require('Assets/img/logo4.png')
+      logo4: require('Assets/img/logo4.png'),
+      sellerLevelList: [],
+      selectIndex: 0,
+      selectLeval: {}
     }
   },
+  created () {
+    this.fetchSellerInfo()
+  },
   methods: {
+    handleLeval (index, item) {
+      this.selectIndex = index
+      this.selectLeval = item
+    },
+    async fetchSellerInfo () {
+      let sellerLevelList = await getSellerLevelList()
+      if (sellerLevelList && sellerLevelList.status === 200) {
+        this.sellerLevelList = sellerLevelList.data
+        this.selectLeval = sellerLevelList.data[0]
+      }
+    },
     sureUpLevel () {
-      this.$router.push({ name: 'sure' })
+      this.$router.push({ name: 'sure', query: { 'selectLeval': this.selectLeval } })
     }
   }
 }

@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { GetSellerPackageList } from '@api'
 import Header from 'Common/Header'
 import {
   Tab,
@@ -122,8 +123,28 @@ export default {
     }
   },
   methods: {
-    getData (index) {
-      console.log(index)
+    async fetchSellerPackageList (status) {
+      let page = 1
+      let rows = 10
+      let keyword = ''
+      let sellerId = sessionStorage.getItem('seller_id')
+      let packageType = this.$route.query.packageType
+      let auditStatus = status
+      let consumptionTypes = -1
+      let sellerPackageList = await GetSellerPackageList(page,
+        rows,
+        keyword,
+        sellerId,
+        packageType,
+        auditStatus,
+        consumptionTypes)
+      if (sellerPackageList && sellerPackageList.status === 200) {
+        this.sellerPackageList = sellerPackageList.data
+        console.log(this.sellerPackageList)
+      }
+    },
+    getData (auditStatus) {
+      this.fetchSellerPackageList(auditStatus)
     },
     onButtonClick (type, id) {
       alert('on button click ' + type)

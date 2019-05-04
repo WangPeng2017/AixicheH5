@@ -3,18 +3,19 @@
     <Header title="发布商品"></Header>
     <section class="section">
       <group class="group">
-        <cell title="滋补保健"
-              @click.native="chooseClassify"
-              :class="n === 3 ? 'isActive':''"
+        <cell :class="n === 3 ? 'isActive':''"
               is-link
-              v-for="n in 10 "
-              :key="n "></cell>
+              v-for="n in this.goodsCategoryList"
+              :key="n.category_id "
+              :title="n.category_name"
+              @click.native="chooseClassify(n.category_id)"></cell>
       </group>
     </section>
   </div>
 </template>
 
 <script>
+import { getGoodsCategoryList } from '@api'
 import Header from 'Common/Header'
 import { Group, Cell } from 'vux'
 export default {
@@ -29,12 +30,22 @@ export default {
       results: [],
       value: '',
       placeholder: '输入商品名称',
-      goods: require('Assets/img/logo.png')
+      goods: require('Assets/img/logo.png'),
+      goodsCategoryList: []
     }
   },
+  created () {
+    this.fetchGoodsCategoryList()
+  },
   methods: {
+    async fetchGoodsCategoryList () {
+      let goodsCategoryList = await getGoodsCategoryList()
+      if (goodsCategoryList && goodsCategoryList.status === 200) {
+        this.goodsCategoryList = goodsCategoryList.data
+      }
+    },
     chooseClassify (id) {
-      this.$router.push({ name: 'chooseClassify2' })
+      this.$router.push({ name: 'chooseClassify2', query: { 'category_id': id } })
     }
   }
 }

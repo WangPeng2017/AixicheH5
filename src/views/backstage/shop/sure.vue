@@ -4,7 +4,7 @@
     <section class="section">
       <div class="part1">
         <p>
-          <span>￥</span> 6900.00
+          <span>￥</span> {{selectLeval.seller_level_standard}}
         </p>
       </div>
       <div class="part2">
@@ -21,20 +21,28 @@
               <van-radio checked-color="#FF0036"
                          name="weixin" />
             </van-cell>
-            <!-- <van-cell clickable @click="payType = 'zhifubao'">
+            <van-cell clickable
+                      @click="payType = 'zhifubao'">
               <template slot="title">
-                <img :src="zhifubao" alt="" style="width: 24px;vertical-align: middle;" />
+                <img :src="zhifubao"
+                     alt=""
+                     style="width: 24px;vertical-align: middle;" />
                 <span>支付宝</span>
               </template>
-              <van-radio checked-color="#FF0036" name="zhifubao" />
+              <van-radio checked-color="#FF0036"
+                         name="zhifubao" />
             </van-cell>
-            <van-cell clickable @click="payType = 'bankCard'">
+            <van-cell clickable
+                      @click="payType = 'bankCard'">
               <template slot="title">
-                <img :src="bankCard" alt="" style="width: 24px;vertical-align: middle;" />
+                <img :src="bankCard"
+                     alt=""
+                     style="width: 24px;vertical-align: middle;" />
                 <span>银行卡</span>
               </template>
-              <van-radio checked-color="#FF0036" name="bankCard" />
-            </van-cell> -->
+              <van-radio checked-color="#FF0036"
+                         name="bankCard" />
+            </van-cell>
           </van-cell-group>
         </van-radio-group>
       </div>
@@ -50,6 +58,7 @@
 import Header from 'Common/Header'
 import { XButton, XTable } from 'vux'
 import { CellGroup, Cell, RadioGroup, Radio } from 'vant'
+import { createCashPay } from '@api'
 export default {
   name: 'sure',
   components: {
@@ -66,12 +75,30 @@ export default {
       payType: 'weixin',
       weixin: require('Assets/img/weixin.png'),
       zhifubao: require('Assets/img/zhifubao.png'),
-      bankCard: require('Assets/img/bankCard.png')
+      bankCard: require('Assets/img/bankCard.png'),
+      selectLeval: {}
     }
   },
+  created () {
+    this.selectLeval = this.$route.query.selectLeval
+  },
   methods: {
+    async _createCashPay () {
+      // let form = new FormData()
+      // form.append('price', this.selectLeval.seller_level_standard)
+      // form.append('seller_id', sessionStorage.getItem('seller_id'))
+      // form.append('level_id', this.selectLeval.seller_level_id)
+      let price = this.selectLeval.seller_level_standard
+      let sellerId = sessionStorage.getItem('seller_id')
+      let levelId = this.selectLeval.seller_level_id
+      let res = await createCashPay(price, sellerId, levelId)
+      if (res && res.code === 200) {
+        this.$router.push({ name: 'paySuccess' })
+        console.log(res)
+      }
+    },
     surePay () {
-      this.$router.push({ name: 'paySuccess' })
+      this._createCashPay()
     }
   }
 }

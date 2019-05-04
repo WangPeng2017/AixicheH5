@@ -9,36 +9,36 @@
            custom-bar-width="50px">
         <tab-item @on-item-click="getData(0)"
                   selected>订单</tab-item>
-        <tab-item @on-item-click="getData(1)">未发货</tab-item>
-        <tab-item @on-item-click="getData(2)">已发货</tab-item>
-        <tab-item @on-item-click="getData(3)">退货</tab-item>
+        <tab-item @on-item-click="getData(2)">未发货</tab-item>
+        <tab-item @on-item-click="getData(3)">已发货</tab-item>
+        <tab-item @on-item-click="getData()">退货</tab-item>
       </tab>
       <div class="toolBox">
         <div class="tool">
           <span class="date"
                 @click="chooseDate(format)">{{ date }}</span>
-          <van-search show-action
-                      placeholder="搜索订单编号或付款账户"
+          <span class="total">共计¥{{total}}</span>
+          <van-search placeholder="搜索订单编号或付款账户"
                       v-model="value"
                       style="width:180px; padding: 0; margin-right: 10px; display: inline-block; float:right;">
-            <div slot="action"
-                 style="line-height:24px;"
-                 @click="onSearch">搜索</div>
           </van-search>
+
         </div>
       </div>
     </section>
     <section class="section2">
-      <div class="list-item">
+      <div class="list-item"
+           v-for="(n,i) in orderList "
+           :key="i">
         <div class="item-title">
           <img :src="defaultGoods"
                alt=""
                class="title-img">
           <div class="right">
-            <span class="title-price">￥1368.00</span>
-            <p class="title-code">订单编号：12348943298</p>
+            <span class="title-price">￥{{n.total_money.toFixed(2)}}</span>
+            <p class="title-code">订单编号：{{n.order_sn}}</p>
             <span class="title-toDetail"
-                  @click="toOrderDetail(111, true)">查看详情></span>
+                  @click="toOrderDetail(n.order_id, true)">查看详情></span>
           </div>
         </div>
         <div class="item-content"
@@ -103,6 +103,8 @@ import Header from 'Common/Header'
 import { Tab, TabItem } from 'vux'
 import { Search } from 'vant'
 import { formatDate } from 'Lib/formatDate'
+import { GetOrderList } from '@api'
+const USER_ID = '83b0e4f9-3dcc-4a60-8a42-df514ed239f5'
 export default {
   name: 'order',
   components: {
@@ -116,14 +118,25 @@ export default {
       date: formatDate(new Date(), this.format || 'YYYY-MM'),
       format: 'YYYY-MM',
       value: '',
-      state: 1,
-      defaultGoods: require('Assets/img/defaultGoods.png')
+      state: -1,
+      total: 1231321,
+      defaultGoods: require('Assets/img/defaultGoods.png'),
+      orderList: []
     }
   },
+  created () {
+    this.fetchOrderList()
+  },
   methods: {
+    async fetchOrderList () {
+      let orderList = await GetOrderList(USER_ID, 10, 10, this.state)
+      if (orderList && orderList.status === 200) {
+        this.orderList = orderList.data.list
+      }
+    },
     getData (index) {
       this.state = index
-      console.log(index)
+      this.fetchOrderList()
     },
     chooseDate (format) {
       const vm = this
@@ -145,9 +158,9 @@ export default {
     },
     toOrderDetail (id, type) {
       if (!type) {
-        this.$router.push({ name: 'orderDetail1' })
+        this.$router.push({ name: 'orderDetail1', query: { order_id: id } })
       } else {
-        this.$router.push({ name: 'orderDetail2' })
+        this.$router.push({ name: 'orderDetail2', query: { order_id: id } })
       }
     },
     onSearch () { }
@@ -217,7 +230,7 @@ export default {
     background: #fff;
     padding: 7px 7px 10px 7px;
     overflow: hidden;
-
+    margin-bottom: 8px;
     .item-title {
       padding-bottom: 10px;
       display: flex;

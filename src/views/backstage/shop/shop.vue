@@ -4,36 +4,40 @@
     <section class="section">
       <div class="bg"
            :style="{backgroundImage:'url('+bg+')'}">
-        <img :src="logo"
+        <img :src="sellerInfo.seller_logo"
              class="logo"
              alt="">
-        <p class="name">爱惜车一店爱惜车二店</p>
-        <p class="name">爱惜车三点</p>
+        <p class="name">{{sellerInfo.seller_name}}</p>
+        <p class="name">{{sellerInfo.shop_name}}</p>
         <span class="updMSG"
               @click="updMSG">修改信息</span>
       </div>
 
       <div class="content">
         <p>
-          <span class="title">商户等级：钻石商户</span>
-          <span style="margin-left: 40px;">联系人：吴xx</span>
+          <span class="title">商户等级：{{sellerInfo.seller_level_name}}</span>
+          <span style="margin-left: 40px;">联系人：{{sellerInfo.contacts_name}}</span>
         </p>
         <p>
           <span class="title">收款账户：</span>
-          <span>15678445619（微信）</span>
+          <span>{{sellerInfo.shop_phone}}（微信）</span>
         </p>
         <p>
           <span class="title">联系方式：</span>
-          <span>15678445619</span>
+          <span>{{sellerInfo.contacts_mobile}}</span>
+        </p>
+        <p>
+          <span class="title">地址：</span>
+          <span class="content">{{sellerInfo.seller_address}}</span>
         </p>
         <p>
           <span class="title">店铺详情：</span>
-          <span class="content">精致洗车深度洗车镀晶打蜡内饰清洗四轮定位快速洗车</span>
+          <span class="content">{{sellerInfo.seller_introduction}}</span>
         </p>
         <p>
           <span class="title">营业资质：</span>
           <span class="content">
-            <img :src="logo"
+            <img :src="sellerInfo.business_license_img"
                  alt=""
                  style="width: 150px;height:150px;border:1px solid #ccc;">
           </span>
@@ -49,6 +53,9 @@
 <script>
 import Header from 'Common/Header'
 import { XButton, XTable } from 'vux'
+import { getSellerInfo } from '@api'
+const USER_ID = '83b0e4f9-3dcc-4a60-8a42-df514ed239f5'
+
 export default {
   name: 'shop',
   components: {
@@ -59,12 +66,23 @@ export default {
   data () {
     return {
       bg: require('Assets/img/main-bg.png'),
-      logo: require('Assets/img/logo.png')
+      logo: require('Assets/img/logo.png'),
+      sellerInfo: {}
     }
   },
+  created () {
+    this.fetchSellerInfo()
+  },
   methods: {
+    async fetchSellerInfo () {
+      let sellerInfo = await getSellerInfo(USER_ID)
+      if (sellerInfo && sellerInfo.status === 200) {
+        this.sellerInfo = sellerInfo.data
+        console.log(sellerInfo)
+      }
+    },
     updMSG () {
-      this.$router.push({ name: 'updMSG' })
+      this.$router.push({ name: 'updMSG', query: { 'sellerInfo': this.sellerInfo } })
     },
     upLevel () {
       this.$router.push({ name: 'upLevel' })

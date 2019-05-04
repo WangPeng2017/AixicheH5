@@ -1,11 +1,12 @@
 <template>
   <div>
     <Header title="订单详情"></Header>
-    <section class="section">
+    <section class="section"
+             v-if="detail">
       <img :src="defaultGoods"
            class="img"
            alt="">
-      <p class="price">￥2018.00</p>
+      <p class="price">￥{{detail.total_money.toFixed(2)}}</p>
       <p class="title">精致洗车快速洗车镀晶打蜡封釉贴膜四轮定位</p>
 
       <div class="content">
@@ -15,7 +16,7 @@
         </p>
         <p class="content-msg">
           <span class="content-left">付款时间：</span>
-          <span class="content-right">2019-1-8 15:13</span>
+          <span class="content-right">{{detail.create_time}}</span>
         </p>
         <p class="content-msg">
           <span class="content-left">付款账户：</span>
@@ -27,14 +28,14 @@
         </p>
         <p class="content-msg">
           <span class="content-left">订单编号：</span>
-          <span class="content-right">123655616548651699854</span>
+          <span class="content-right">{{detail.order_sn}}</span>
         </p>
       </div>
       <div class="content"
            style="border-top: 10px solid #f6f6f6;">
         <p class="content-msg">
           <span class="content-left">接收地址：</span>
-          <span class="content-right">河南省郑州市二七区南三环连云路都市广场B座</span>
+          <span class="content-right">{{detail.receiver_address}}</span>
         </p>
         <p class="content-msg">
           <span class="content-left">服务方式：</span>
@@ -59,6 +60,8 @@
 
 <script>
 import Header from 'Common/Header'
+import { GetOrderDetail } from '@api'
+
 export default {
   name: 'orderDetail1',
   components: {
@@ -67,10 +70,22 @@ export default {
   data () {
     return {
       defaultGoods: require('Assets/img/defaultGoods.png'),
-      noData: false
+      noData: false,
+      detail: ''
     }
   },
-  methods: {}
+  created () {
+    this.order_id = this.$route.query.order_id
+    this.getDetail()
+  },
+  methods: {
+    async getDetail () {
+      let data = await GetOrderDetail(this.order_id)
+      if (data.status === 200) {
+        this.detail = data.data
+      }
+    }
+  }
 }
 </script>
 

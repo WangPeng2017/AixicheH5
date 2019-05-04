@@ -30,13 +30,15 @@
       <div class="list-item"
            v-for="(n,i) in orderList "
            :key="i">
-        <div class="item-title">
+        <div class="item-title"
+             v-for="item in n.goods"
+             :key="n.order_sn">
           <img :src="defaultGoods"
                alt=""
                class="title-img">
           <div class="right">
-            <span class="title-price">￥{{n.total_money.toFixed(2)}}</span>
-            <p class="title-code">订单编号：{{n.order_sn}}</p>
+            <span class="title-price">￥{{item.goods_price.toFixed(2)}}</span>
+            <p class="title-code">订单编号：{{item.order_sn}}</p>
             <span class="title-toDetail"
                   @click="toOrderDetail(n.order_id, true)">查看详情></span>
           </div>

@@ -824,6 +824,9 @@ export const GetOrderList = (id, page, rows, status) =>
   base.post(
     `/api/Order/GetOrderList?userId=${id}&page=${page}&rows=${rows}&status=${status}`
   )
+// 获取订单详情
+export const GetOrderDetail = (orderId) =>
+  base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
 /**
 返利
  */
@@ -879,8 +882,8 @@ export const delectForm = keyValue =>
 // export const GetList = (userId, isputforward) =>
 //   base.get(`/api/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`)
 // 获取订单详情
-export const GetOrderDetail = (orderId) =>
-  base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
+// export const GetOrderDetail = (orderId) =>
+//   base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
 /**
 套餐
  */

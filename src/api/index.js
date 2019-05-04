@@ -149,7 +149,7 @@ export const getPaymenAccountList = (userid, usertype) =>
   )
 // 添加用户收款账户
 export const SubmitPaymentAccount = form =>
-  base.post('/Payment/PaymentAccount/SubmitPaymentAccount', form)
+  base.post('/api/RebateInfo/SubmitPaymentAccount', form)
 /**
  ******************************************** 用户收款账户接口 ********************************************
  */
@@ -825,7 +825,7 @@ export const GetOrderList = (id, page, rows, status) =>
     `/api/Order/GetOrderList?userId=${id}&page=${page}&rows=${rows}&status=${status}`
   )
 // 获取订单详情
-export const GetOrderDetail = (orderId) =>
+export const GetOrderDetail = orderId =>
   base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
 /**
 返利

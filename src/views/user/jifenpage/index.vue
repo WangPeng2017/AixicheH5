@@ -26,7 +26,8 @@
                  :key="item.record_id">
               <p class="topup"
                  :formatter="moretype(item.rebate_type)">{{data.typename}}<span :class="data.typemoney > 0 ? expend : income"
-                      :formatter="moneytype(item.integral_type,item.integral_num)">{{data.typemoney}}&nbsp;&nbsp;</span></p>
+                      :formatter="moneytype(item.integral_type,item.integral_num)"><img style="width: 20px;margin-bottom: -4px;"
+                       src="../../../assets/image/jifenicon.png">{{data.typemoney}}&nbsp;&nbsp;<label style=" font-size: 13px; font-weight: initial;">余：{{item.after_integral_sum}}&nbsp;&nbsp;</label></span></p>
               <P class="successup">{{item.record_remark}}<span class="datee">{{item.obtain_time | formatDate}}&nbsp;&nbsp;</span></P>
             </div>
           </div>

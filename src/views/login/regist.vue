@@ -51,7 +51,10 @@ import myCodeInput from './components/codeInput'
 import { regist } from '@api'
 import { mapMutations } from 'vuex'
 import { SET_LOADING } from '@store/type'
-
+import Vue from 'vue'
+import { Confirm } from 'wc-messagebox'
+import 'wc-messagebox/style.css'
+Vue.use(Confirm)
 export default {
   components: {
     myInput,
@@ -93,9 +96,15 @@ export default {
         this.$toasted.show('请输入短信验证码！')
         return false
       }
-      if (!/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(this.form.yqm)) {
-        this.$toasted.show('请输入正确的邀请人手机号码！')
-        return false
+      if (!this.form.yqm || this.form.yqm.length <= 0) {
+        if (!confirm('您未输入邀请人号码！确定继续绑定，取消返回填写！')) {
+          return false
+        }
+      } else {
+        if (!/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(this.form.yqm)) {
+          this.$toasted.show('请输入正确的邀请人手机号码！')
+          return false
+        }
       }
       this.setLoading({
         status: true,

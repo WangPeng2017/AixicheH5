@@ -26,7 +26,8 @@
                  :key="item.record_id">
               <p class="topup"
                  :formatter="moretype(item.record_rebate_type)">{{data.typename}}<span :class="data.backtypemoney < 0 ? income : income"
-                      :formatter="backmoneytype(item.record_integral_sum.toFixed(2))">{{data.backtypemoney}}&nbsp;</span></p>
+                      :formatter="backmoneytype(item.record_integral_sum.toFixed(2))"><img style="width: 20px; margin-bottom: -3px;"
+                       src="../../../assets/image/fanliicon.png">{{data.backtypemoney}}&nbsp;&nbsp;<label style=" font-size: 13px; font-weight: initial;">余：{{item.after_record_integral_sum}}&nbsp;&nbsp;</label></span></p>
               <P class="successup">{{item.record_remark}}</P>
               <P class="successup"
                  v-if="!item.seller_name">{{item.true_name}}/{{item.user_mobile}}<label v-if="item.record_rebate_type===3">+</label><span class="datee">{{item.record_return_time | formatDate}}&nbsp;&nbsp;</span></P>

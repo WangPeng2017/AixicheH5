@@ -215,7 +215,7 @@ export default {
   .innow {
     position: fixed;
     right: 18px;
-    font-size: 18px;
+    font-size: 30px;
     color: #666666;
   }
   .innow:hover {
@@ -278,7 +278,7 @@ export default {
     color: #666666;
   }
   .middle {
-    height: 148px;
+    // height: 148px;
     background-color: #fff;
     text-align: left;
     .weixin {

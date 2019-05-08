@@ -28,9 +28,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/api/api2': {
         target: 'http://api.hxing999.com',
-        // target: 'https://hxapi.axccn.cn',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/api2': '/api'
+        }
+      },
+      '/api': {
+        target: 'https://hxapi.axccn.cn',
         // target: 'http://localhost:64144',
         changeOrigin: true,
         pathRewrite: {

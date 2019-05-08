@@ -784,37 +784,37 @@ export const GetUserLevelAccount = userid =>
 
 // 获取商家每月营业额列表
 export const getYMList = id =>
-  base.get(`/api/Finance/GetYMList?seller_id=${id}`)
+  base.get(`/api2/Finance/GetYMList?seller_id=${id}`)
 // 获取商家每年营业额列表
 export const getYList = (id, year) =>
-  base.get(`/api/Finance/GetYList?seller_id=${id}&year=${year}`)
+  base.get(`/api2/Finance/GetYList?seller_id=${id}&year=${year}`)
 // 获取结算清单
 export const FetchFinancialList = (id, page, rows, status) =>
   base.post(
-    `/api/Finance/FinancialList?seller_id=${id}&page=${page}&rows=${rows}&settlement_status=${status}&settlement_source_type=-1`
+    `/api2/Finance/FinancialList?seller_id=${id}&page=${page}&rows=${rows}&settlement_status=${status}&settlement_source_type=-1`
   )
 
 // 获取结算清单
 export const FetchFinancialListByTime = (id, page, rows, status) =>
   base.post(
-    `/api/Finance/FinancialList?seller_id=${id}&page=${page}&rows=${rows}&settlement_status=${status}&settlement_source_type=-1`
+    `/api2/Finance/FinancialList?seller_id=${id}&page=${page}&rows=${rows}&settlement_status=${status}&settlement_source_type=-1`
   )
 /**
 店铺信息
  */
 // 获取店铺信息
 export const getSellerInfo = id =>
-  base.get(`/api/SellerInfo/GetSellerInfo?user_id=${id}`)
+  base.get(`/api2/SellerInfo/GetSellerInfo?user_id=${id}`)
 // 修改店铺信息
 export const updateSellerInfo = form =>
-  base.post('/api/SellerInfo/UpdateSellerInfo', form)
+  base.post('/api2/SellerInfo/UpdateSellerInfo', form)
 // 获取商家等级列表
 export const getSellerLevelList = id =>
-  base.get(`/api/SellerInfo/GetSellerLevelList`)
+  base.get(`/api2/SellerInfo/GetSellerLevelList`)
 // 创建支付
 export const createCashPay = (price, sellerId, levelId) =>
   base.post(
-    `/api/SellerInfo/CreateCashPay?price=${price}&seller_id=${sellerId}&levelId=${levelId}`
+    `/api2/SellerInfo/CreateCashPay?price=${price}&seller_id=${sellerId}&levelId=${levelId}`
   )
 /**
 订单
@@ -822,31 +822,31 @@ export const createCashPay = (price, sellerId, levelId) =>
 // 我的商品订单
 export const GetOrderList = (id, page, rows, status) =>
   base.post(
-    `/api/Order/GetOrderList?userId=${id}&page=${page}&rows=${rows}&status=${status}`
+    `/api2/Order/GetOrderList?userId=${id}&page=${page}&rows=${rows}&status=${status}`
   )
 // 获取订单详情
 export const GetOrderDetail = orderId =>
-  base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
+  base.post(`/api2/Order/GetOrderDetail?order_id=${orderId}`)
 /**
 返利
  */
 
 // 获取用户返利信息列表
 export const getRebateInfo = userId =>
-  base.get(`api/RebateInfo/GetRebateInfo?user_id=${userId}`)
+  base.get(`api2/RebateInfo/GetRebateInfo?user_id=${userId}`)
 // 获取返利提现账户列表
 export const GetPayMentaListGET = (userId, type) =>
-  base.get(`api/RebateInfo/GetPayMentaList?user_id=${userId}&usertype=${type}`)
+  base.get(`api2/RebateInfo/GetPayMentaList?user_id=${userId}&usertype=${type}`)
 // 添加体现账号接口
 export const submitPaymentAccount = (entity, userId) => {
   base.post(
-    `api/RebateInfo/SubmitPaymentAccount?entity=${entity}&user_id=${userId}`
+    `api2/RebateInfo/SubmitPaymentAccount?entity=${entity}&user_id=${userId}`
   )
 }
 // 获取用户提现记录
 export const GetList = (userId, isputforward) =>
   base.get(
-    `/api/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`
+    `/api2/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`
   )
 
 /**
@@ -855,35 +855,35 @@ export const GetList = (userId, isputforward) =>
 // 分页获取商品列表
 export const GetGoodsList = (page, row, keyword, sellerId, auditStatus) =>
   base.post(
-    `/api/Goods/GetGridJson?page=${page}&row=${row}&keyword=${keyword}&seller_id=${sellerId}&audit_status=${auditStatus} }`
+    `/api2/Goods/GetGridJson?page=${page}&row=${row}&keyword=${keyword}&seller_id=${sellerId}&audit_status=${auditStatus} }`
   )
 // 获取商品分类列表
 export const getGoodsCategoryList = () =>
-  base.get(`/api/Goods/GetGoodsCategoryList`)
+  base.get(`/api2/Goods/GetGoodsCategoryList`)
 // 获取商品分类列表
 export const getGoodsBrandList = categoryId =>
-  base.post(`/api/Goods/GetGoodsBrandList?category_id=${categoryId}`)
+  base.post(`/api2/Goods/GetGoodsBrandList?category_id=${categoryId}`)
 // 获取商品
 export const getFormJson = goodsID =>
-  base.post(`/api/Goods/GetFormJson?goodsID=${goodsID}`)
+  base.post(`/api2/Goods/GetFormJson?goodsID=${goodsID}`)
 // 发布商品
 export const submitForm = (goodsEntity, keyValue, sellerId, userId) =>
   base.post(
-    `/api/Goods/SubmitForm?goodsEntity=${goodsEntity}&keyValue=${keyValue}&sellerId=${sellerId}&userId=${userId}`
+    `/api2/Goods/SubmitForm?goodsEntity=${goodsEntity}&keyValue=${keyValue}&sellerId=${sellerId}&userId=${userId}`
   )
 // 删除商品
 export const delectForm = keyValue =>
-  base.post(`/api/Goods/DelectForm?keyValue=${keyValue}`)
+  base.post(`/api2/Goods/DelectForm?keyValue=${keyValue}`)
 
 /**
 订单
  */
 // 获取用户提现记录
 // export const GetList = (userId, isputforward) =>
-//   base.get(`/api/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`)
+//   base.get(`/api2/RebateInfo/GetList?userid=${userId}&is_putforward=${isputforward}`)
 // 获取订单详情
 // export const GetOrderDetail = (orderId) =>
-//   base.post(`/api/Order/GetOrderDetail?order_id=${orderId}`)
+//   base.post(`/api2/Order/GetOrderDetail?order_id=${orderId}`)
 /**
 套餐
  */
@@ -898,5 +898,5 @@ export const GetSellerPackageList = (
   consumptionTypes
 ) =>
   base.post(
-    `/api/SellerPackage/GetGridJson?page=${page}&rows=${rows}&keyword=${keyword}&seller_id=${sellerId}&package_type=${packageType}&audit_status=${auditStatus}&consumption_types=${consumptionTypes}`
+    `/api2/SellerPackage/GetGridJson?page=${page}&rows=${rows}&keyword=${keyword}&seller_id=${sellerId}&package_type=${packageType}&audit_status=${auditStatus}&consumption_types=${consumptionTypes}`
   )

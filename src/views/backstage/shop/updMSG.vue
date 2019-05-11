@@ -120,7 +120,7 @@ export default {
       form.append('contacts_mobile', this.phone)
       form.append('contacts_email', data.contacts_email)
       form.append('licence_number', data.licence_number)
-      form.append('business_license_img', data.business_license_img)
+      form.append('business_license_img', this.image2)
       form.append('business_license_start', data.business_license_start)
       form.append('business_license_end', data.business_license_end)
       form.append('is_longtime', data.is_longtime)

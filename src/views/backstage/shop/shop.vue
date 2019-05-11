@@ -4,7 +4,7 @@
     <section class="section">
       <div class="bg"
            :style="{backgroundImage:'url('+bg+')'}">
-        <img :src="sellerInfo.seller_logo"
+        <img :src="`https://img.axccn.cn/${sellerInfo.seller_head_img}`"
              class="logo"
              alt="">
         <p class="name">{{sellerInfo.seller_name}}</p>
@@ -20,7 +20,7 @@
         </p>
         <p>
           <span class="title">收款账户：</span>
-          <span>{{sellerInfo.shop_phone}}（微信）</span>
+          <span>{{sellerInfo.settlement_bank_account_number}}（微信）</span>
         </p>
         <p>
           <span class="title">联系方式：</span>
@@ -37,7 +37,7 @@
         <p>
           <span class="title">营业资质：</span>
           <span class="content">
-            <img :src="sellerInfo.business_license_img"
+            <img :src="`https://img.axccn.cn/${sellerInfo.business_license_img}`"
                  alt=""
                  style="width: 150px;height:150px;border:1px solid #ccc;">
           </span>

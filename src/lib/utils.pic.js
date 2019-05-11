@@ -136,7 +136,7 @@ export const upload = function (filename, imageurl, doAfter, webUrl) {
     var formdata = getFormData();
     formdata.append('imagefile', blob);
     formdata.append('filename', filename);
-
+    // 接口调失败了
     window.axios.form(webUrl ? webUrl : '默认上传路径', formdata).then(res => {
       doAfter(res);
     })
